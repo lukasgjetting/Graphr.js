@@ -48,10 +48,10 @@ function addPoint(x, y) {
 
 function parseScript(script) {
 
-	// A valid command looks like one of these:
+	// A valid command looks like this:
 	// command:args (comma-seperated arguments)
 
-	let parts = script.split(":");
+	let parts = script.replace(" ", "").split(":");
 
 	if(parts.length != 2) {
 		alert("That's not a real command!");
@@ -67,7 +67,7 @@ function parseScript(script) {
 				alert("Wrong amount of arguments for a point");
 				return false;
 			} else {
-				addPoint(args[0], args[1]);
+				addPoint(parseInt(args[0]), parseInt(args[1]));
 			}
 		break;
 	}
