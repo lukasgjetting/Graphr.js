@@ -43,11 +43,36 @@ function render() {
 }
 
 function addPoint(x, y) {
-	points.push({"x": x, "y": y});
+	points.push(new Point(x, y));
 }
 
 function parseScript(script) {
-	
+
+	// A valid command looks like one of these:
+	// command:args (comma-seperated arguments)
+
+	let parts = script.split(":");
+
+	if(parts.length != 2) {
+		alert("That's not a real command!");
+		return false;
+	}
+
+	let args = parts[1].split(",");
+
+	// Command
+	switch(parts[0]) {
+		case "point":
+			if (args.length != 2) {
+				alert("Wrong amount of arguments for a point");
+				return false;
+			} else {
+				addPoint(args[0], args[1]);
+			}
+		break;
+	}
+
+	return true;
 }
 
 // Event listeners
@@ -66,3 +91,18 @@ canvas.addEventListener("mousemove", function(event){
 	lastPosition.x = event.clientX;
 	lastPosition.y = event.clientY;
 });
+
+document.getElementById("command-line").addEventListener("keypress", function(event) {
+	if(event.key == "Enter") {
+		if(parseScript(this.value)) {
+			this.value = "";
+		}
+	}
+});
+
+class Point {
+	constructor(x, y) {
+		this.x = x;
+		this.y = y;
+	}
+}
