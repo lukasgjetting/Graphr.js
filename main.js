@@ -81,6 +81,13 @@ function parseScript(script) {
 	return true;
 }
 
+function moveCursorToEnd(input) {
+	// Set the cursor at the end of input text
+	setTimeout(function(){
+		input.setSelectionRange(input.value.length, input.value.length);
+	}, 10);
+}
+
 // Event listeners
 canvas.addEventListener("mousedown", function() {
 	isDragging = true;
@@ -99,7 +106,6 @@ canvas.addEventListener("mousemove", function(event){
 });
 
 document.getElementById("command-line").addEventListener("keydown", function(event) {
-	console.log(event);
 	if(event.key == "Enter") {
 		if(this.value.length > 0) {
 			prevCommands.unshift(this.value);
@@ -113,11 +119,11 @@ document.getElementById("command-line").addEventListener("keydown", function(eve
 		}
 		currentIndex = -1;
 	} else if(event.key == "ArrowUp"){
-		console.log(prevCommands);
 		if(currentIndex < prevCommands.length-1) {
 			currentIndex++;
 			this.value = prevCommands[currentIndex];
 		}
+		moveCursorToEnd(this);
 	} else if(event.key == "ArrowDown") {
 		if(currentIndex > 0) {
 			currentIndex--;
@@ -126,6 +132,7 @@ document.getElementById("command-line").addEventListener("keydown", function(eve
 			currentIndex = -1;
 			this.value = "";
 		}
+		moveCursorToEnd(this);
 	}
 });
 
