@@ -89,10 +89,10 @@ function moveCursorToEnd(input) {
 }
 
 // Event listeners
-canvas.addEventListener("mousedown", function() {
+document.addEventListener("mousedown", function() {
 	isDragging = true;
 });
-canvas.addEventListener("mouseup", function() {
+document.addEventListener("mouseup", function() {
 	isDragging = false;
 });
 canvas.addEventListener("mousemove", function(event){ 
