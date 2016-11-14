@@ -10,15 +10,22 @@ let zoom = 100;
 let position = [-2, -2];
 
 const loop = setInterval(function(){
+	update();
+	render();
+}, 500);
+
+function update() {
+	// TODO
+}
+
+function render() {
+	context.clearRect(0, 0, width, height);
+
 	// Draw x and y-axis
 	context.beginPath();
 	context.moveTo(-position[0]*zoom, 0);
 	context.lineTo(-position[0]*zoom, height);
-	context.beginPath();
 	context.moveTo(0,-position[1]*zoom);
 	context.lineTo(width,-position[1]*zoom);
-	console.log(width + " - " + (-position[1]*zoom));
-	
 	context.stroke();
-
-}, 500);
+}
