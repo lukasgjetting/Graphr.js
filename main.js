@@ -11,6 +11,9 @@ let isDragging = false;
 let position = { x: 1, y: 1 };
 let lastPosition = { x: 0, y: 0 };
 
+let prevCommands = [];
+let currentIndex = 0;
+
 let points = [];
 
 const loop = setInterval(function(){
@@ -54,7 +57,7 @@ function parseScript(script) {
 	let parts = script.replace(" ", "").split(":");
 
 	if(parts.length != 2) {
-		alert("That's not a real command!");
+		alert("Please check your syntax");
 		return false;
 	}
 
@@ -68,7 +71,10 @@ function parseScript(script) {
 				return false;
 			} else {
 				addPoint(parseFloat(args[0]), parseFloat(args[1]));
-			}
+			}	
+		break;
+		default:
+			alert("That's not a valid command");
 		break;
 	}
 
@@ -92,9 +98,32 @@ canvas.addEventListener("mousemove", function(event){
 	lastPosition.y = event.clientY;
 });
 
-document.getElementById("command-line").addEventListener("keypress", function(event) {
+document.getElementById("command-line").addEventListener("keydown", function(event) {
+	console.log(event);
 	if(event.key == "Enter") {
-		if(parseScript(this.value)) {
+		if(this.value.length > 0) {
+			prevCommands.unshift(this.value);
+			if(prevCommands.length > 10) {
+				prevCommands.shift();
+			}
+
+			if(parseScript(this.value)) {
+				this.value = "";
+			}
+		}
+		currentIndex = -1;
+	} else if(event.key == "ArrowUp"){
+		console.log(prevCommands);
+		if(currentIndex < prevCommands.length-1) {
+			currentIndex++;
+			this.value = prevCommands[currentIndex];
+		}
+	} else if(event.key == "ArrowDown") {
+		if(currentIndex > 0) {
+			currentIndex--;
+			this.value = prevCommands[currentIndex];
+		} else {
+			currentIndex = -1;
 			this.value = "";
 		}
 	}
