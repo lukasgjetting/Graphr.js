@@ -7,15 +7,12 @@ const width = canvas.clientWidth;
 
 // 100%
 let zoom = 100;
-let position = {
-	x: 0,
-	y: 0
-};
 let isDragging = false;
-let lastPosition = {
-	x: 0,
-	y: 0
-};
+let position = { x: 1, y: 1 };
+let lastPosition = { x: 0, y: 0 };
+
+let points = [];
+
 const loop = setInterval(function(){
 	update();
 	render();
@@ -30,11 +27,23 @@ function render() {
 
 	// Draw x and y-axis
 	context.beginPath();
-	context.moveTo(-position.x*zoom, 0);
-	context.lineTo(-position.x*zoom, height);
+	context.moveTo(position.x*zoom, 0);
+	context.lineTo(position.x*zoom, height);
 	context.moveTo(0, height-position.y*zoom);
 	context.lineTo(width, height-position.y*zoom);
 	context.stroke();
+
+	// Draw points
+	for(let i = 0; i < points.length; i++) {
+		context.fillRect(
+			(points[i].x+position.x)*zoom - 3,
+			height-(points[i].y+position.y)*zoom - 3,
+			6, 6);
+	}
+}
+
+function addPoint(x, y) {
+	points.push({"x": x, "y": y});
 }
 
 // Event listeners
@@ -46,14 +55,10 @@ canvas.addEventListener("mouseup", function() {
 });
 canvas.addEventListener("mousemove", function(event){ 
 	if(isDragging) {
-
-		position.x += (lastPosition.x - event.clientX)/100;
-		position.y += (lastPosition.y - event.clientY)/100;
-
-		console.log(position);
+		position.x -= (lastPosition.x - event.clientX)/zoom;
+		position.y += (lastPosition.y - event.clientY)/zoom;
 	}
 
 	lastPosition.x = event.clientX;
 	lastPosition.y = event.clientY;
-
 });
