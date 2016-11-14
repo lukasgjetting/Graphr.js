@@ -67,7 +67,7 @@ function parseScript(script) {
 				alert("Wrong amount of arguments for a point");
 				return false;
 			} else {
-				addPoint(parseInt(args[0]), parseInt(args[1]));
+				addPoint(parseFloat(args[0]), parseFloat(args[1]));
 			}
 		break;
 	}
