@@ -1,8 +1,10 @@
-#graphr-canvas {
-	display: block;
+#container {
+	width: 600px;
 	margin: 0 auto;
+}
+#graphr-canvas {
 	border: 1px solid black;
 }
-body {
-
+#commandLine {
+	width: 100%;
 }

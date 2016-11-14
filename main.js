@@ -46,6 +46,10 @@ function addPoint(x, y) {
 	points.push({"x": x, "y": y});
 }
 
+function parseScript(script) {
+	
+}
+
 // Event listeners
 canvas.addEventListener("mousedown", function() {
 	isDragging = true;
