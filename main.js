@@ -1,6 +1,7 @@
 const canvas = document.getElementById("graphr-canvas");
 // Rename til "context"?
 const context = canvas.getContext("2d");
+context.fillStyle = '#0000ff'; 
 
 const height = canvas.clientHeight;
 const width = canvas.clientWidth;
