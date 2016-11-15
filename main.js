@@ -6,7 +6,7 @@ const height = canvas.clientHeight;
 const width = canvas.clientWidth;
 
 // 100%
-let zoom = 100;
+let zoom = 50;
 let isDragging = false;
 let position = { x: 1, y: 1 };
 let lastPosition = { x: 0, y: 0 };
@@ -26,7 +26,7 @@ function update() {
 }
 
 function render() {
-	context.clearRect(0, 0, width, height);
+	context.clearRect(0, 0, width+10, height+10);
 
 	// Draw x and y-axis
 	context.beginPath();
@@ -35,6 +35,31 @@ function render() {
 	context.moveTo(0, height-position.y*zoom);
 	context.lineTo(width, height-position.y*zoom);
 	context.stroke();
+
+	// Draw axis-lines
+	for (let i = -100; i < 100; i++) {
+		if (i === 0) {
+            continue;
+        }
+		context.beginPath();
+		context.moveTo(position.x * zoom - 10,
+					   height - (position.y + i) * zoom);
+		context.lineTo(position.x * zoom + 10,
+                       height - (position.y + i) * zoom);
+		context.stroke();
+	}
+
+	for (let i = -100; i < 100; i++) {
+		if (i === 0) {
+			continue;
+		}
+        context.beginPath();
+        context.moveTo((position.x + i) * zoom,
+                       height - position.y * zoom - 10);
+        context.lineTo((position.x + i) * zoom,
+                       height - position.y * zoom + 10);
+        context.stroke();
+    }
 
 	// Draw points
 	for(let i = 0; i < points.length; i++) {
