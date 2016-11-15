@@ -117,9 +117,11 @@ function moveCursorToEnd(input) {
 // Event listeners
 document.addEventListener("mousedown", function() {
 	isDragging = true;
+	canvas.style.cursor = "pointer";
 });
 document.addEventListener("mouseup", function() {
 	isDragging = false;
+	canvas.style.cursor = "auto";
 });
 canvas.addEventListener("mousemove", function(event){ 
 	if(isDragging) {
