@@ -73,14 +73,16 @@ function render() {
 
 	// Draw graphs
 	for(let i = 0; i < graphs.length; i++) {
-		let x = position.x;
+		let x = -position.x;
+
 		context.moveTo(0, eval(graphs[i]));
-		console.log(graphs[i]);
+		//console.log(graphs[i]);
 
 		for(let j  = 1; j <= 10; j++) {
 			x += 1;
-			context.lineTo(width/10*j, height - eval(graphs[i]) * zoom);
-			console.log(x + " - " + width/10*j + " , " + eval(graphs[i]));
+			context.lineTo(width/10*j, height  -eval(graphs[i]) * zoom);
+			//console.log(x);
+			//console.log(x + " - " + width/10*j + " , " + eval(graphs[i]));
 		}
 		context.stroke();
 	}
