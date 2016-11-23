@@ -44,9 +44,9 @@ function render() {
             continue;
         }
 		context.beginPath();
-		context.moveTo(position.x * zoom - 10,
+		context.moveTo(position.x * zoom - 5,
 					   height - (position.y + i) * zoom);
-		context.lineTo(position.x * zoom + 10,
+		context.lineTo(position.x * zoom + 5,
                        height - (position.y + i) * zoom);
 		context.stroke();
 	}
@@ -57,9 +57,9 @@ function render() {
 		}
         context.beginPath();
         context.moveTo((position.x + i) * zoom,
-                       height - position.y * zoom - 10);
+                       height - position.y * zoom - 5);
         context.lineTo((position.x + i) * zoom,
-                       height - position.y * zoom + 10);
+                       height - position.y * zoom + 5);
         context.stroke();
     }
 
@@ -75,12 +75,13 @@ function render() {
 	for(let i = 0; i < graphs.length; i++) {
 		let x = -position.x;
 
-		context.moveTo(0, eval(graphs[i]));
+		context.moveTo((position.x+x)*zoom, height  -eval(graphs[i]) * zoom);
 		//console.log(graphs[i]);
 
-		for(let j  = 1; j <= 10; j++) {
-			x += 1;
-			context.lineTo(width/10*j, height  -eval(graphs[i]) * zoom);
+		let steps = 40;
+
+		for(x = 1; x <= steps; x++) {
+			context.lineTo((position.x+x)*zoom, height-(position.y+eval(graphs[i]) * zoom));
 			//console.log(x);
 			//console.log(x + " - " + width/10*j + " , " + eval(graphs[i]));
 		}
@@ -88,9 +89,6 @@ function render() {
 	}
 }
 
-function addPoint(x, y) {
-	points.push(new Point(x, y));
-}
 
 function parseScript(script) {
 
@@ -113,8 +111,18 @@ function parseScript(script) {
 				alert("Wrong amount of arguments for a point");
 				return false;
 			} else {
-				addPoint(parseFloat(args[0]), parseFloat(args[1]));
+				points.push(new Point(parseFloat(args[0]), parseFloat(args[1])));
 			}	
+		break;
+		case "graph":
+			if(args.length == 1) {
+				let x = 1;
+				if(parseFloat(eval(args[0]))) {
+					graphs.push(args[0]);
+				} else {
+					return false;
+				}
+			}
 		break;
 		default:
 			alert("That's not a valid command");
