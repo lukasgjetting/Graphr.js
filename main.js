@@ -1,7 +1,7 @@
 const canvas = document.getElementById("graphr-canvas");
 // Rename til "context"?
 const context = canvas.getContext("2d");
-context.fillStyle = '#0000ff'; 
+context.fillStyle = '#0000ff';
 
 const height = canvas.clientHeight;
 const width = canvas.clientWidth;
@@ -94,6 +94,7 @@ function parseScript(script) {
 
 	// A valid command looks like this:
 	// command:args (comma-seperated arguments)
+	// lol
 
 	let parts = script.replace(" ", "").split(":");
 
@@ -112,7 +113,7 @@ function parseScript(script) {
 				return false;
 			} else {
 				points.push(new Point(parseFloat(args[0]), parseFloat(args[1])));
-			}	
+			}
 		break;
 		case "graph":
 			if(args.length == 1) {
@@ -148,7 +149,7 @@ document.addEventListener("mouseup", function() {
 	isDragging = false;
 	canvas.style.cursor = "auto";
 });
-canvas.addEventListener("mousemove", function(event){ 
+canvas.addEventListener("mousemove", function(event){
 	if(isDragging) {
 		position.x -= (lastPosition.x - event.clientX)/zoom;
 		position.y += (lastPosition.y - event.clientY)/zoom;
