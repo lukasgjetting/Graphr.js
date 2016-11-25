@@ -6,7 +6,6 @@ context.fillStyle = '#0000ff';
 const height = canvas.clientHeight;
 const width = canvas.clientWidth;
 
-// 100%
 let zoom = 50;
 let isDragging = false;
 let position = { x: 1, y: 1 };
@@ -75,15 +74,18 @@ function render() {
 	for(let i = 0; i < graphs.length; i++) {
 		let x = -position.x;
 
-		context.moveTo((position.x+x)*zoom, height  -eval(graphs[i]) * zoom);
+		context.moveTo((position.x+x)*zoom, height - eval(graphs[i]) * zoom);
 		//console.log(graphs[i]);
 
-		let steps = 40;
+		let o = 0;
+		for(x = -position.x; x <= (width/zoom)-position.x; x += 1/(width/zoom)) {
 
-		for(x = 1; x <= steps; x++) {
-			context.lineTo((position.x+x)*zoom, height-(position.y+eval(graphs[i]) * zoom));
+			//console.log(o);
+			context.lineTo((position.x+x)*zoom, height-(position.y+eval(graphs[i])) * zoom);
+			//console.log(x + " - " + eval(graphs[i]));
 			//console.log(x);
 			//console.log(x + " - " + width/10*j + " , " + eval(graphs[i]));
+			o++;
 		}
 		context.stroke();
 	}
