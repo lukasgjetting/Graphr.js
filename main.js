@@ -127,6 +127,17 @@ function parseScript(script) {
 				}
 			}
 		break;
+		case "zoom":
+			if(args.length != 1) {
+				return false;
+			} else {
+				if(parseInt(args[0])) {
+					zoom = parseInt(args[0]);
+				} else {
+					return false;
+				}
+			}
+			break;
 		default:
 			alert("That's not a valid command");
 		break;
