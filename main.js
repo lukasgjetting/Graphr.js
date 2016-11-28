@@ -1,5 +1,5 @@
 const canvas = document.getElementById("graphr-canvas");
-// Rename til "context"?
+
 const context = canvas.getContext("2d");
 context.fillStyle = '#0000ff';
 
@@ -30,6 +30,10 @@ function render() {
 	context.clearRect(0, 0, width+10, height+10);
 
 	// Draw x and y-axis
+
+
+    context.strokeStyle = "black";
+
 	context.beginPath();
 	context.moveTo(position.x*zoom, 0);
 	context.lineTo(position.x*zoom, height);
@@ -74,14 +78,18 @@ function render() {
 	for(let i = 0; i < graphs.length; i++) {
 		let x = -position.x;
 
-		context.moveTo((position.x+x)*zoom, height - eval(graphs[i]) * zoom);
+
+		context.strokeStyle = graphs[i][1];
+
+		context.beginPath();
+		context.moveTo((position.x+x)*zoom, height - eval(graphs[i][0]) * zoom);
 		//console.log(graphs[i]);
 
 		let o = 0;
 		for(x = -position.x; x <= (width/zoom)-position.x; x += 1/(width/zoom)) {
 
 			//console.log(o);
-			context.lineTo((position.x+x)*zoom, height-(position.y+eval(graphs[i])) * zoom);
+			context.lineTo((position.x+x)*zoom, height-(position.y+eval(graphs[i][0])) * zoom);
 			//console.log(x + " - " + eval(graphs[i]));
 			//console.log(x);
 			//console.log(x + " - " + width/10*j + " , " + eval(graphs[i]));
@@ -98,8 +106,8 @@ function parseScript(script) {
 	// command:args (comma-seperated arguments)
 	// lol
 
-	let parts = script.replace(" ", "").split(":");
-
+	let parts = script.replace(/ /g, "").split(":");
+	
 	if(parts.length != 2) {
 		alert("Please check your syntax");
 		return false;
@@ -110,7 +118,7 @@ function parseScript(script) {
 	// Command
 	switch(parts[0]) {
 		case "point":
-			if (args.length != 2) {
+			if (args.length < 1 ) {
 				alert("Wrong amount of arguments for a point");
 				return false;
 			} else {
@@ -119,12 +127,17 @@ function parseScript(script) {
 		break;
 		case "graph":
 			if(args.length == 1) {
+				args[1] = "black";
+			}
+			if(args.length > 0 && args.length < 3) {
 				let x = 1;
 				if(parseFloat(eval(args[0]))) {
-					graphs.push(args[0]);
+					graphs.push([args[0], args[1]]);
 				} else {
 					return false;
 				}
+			} else {
+
 			}
 		break;
 		case "zoom":
